@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrinho - King's</title>
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #111;
+    }
+    header {
+      background-color: #000;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+    .container {
+      padding: 2rem;
+      max-width: 960px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background-color: #fff;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .item-info {
+      flex: 1;
+    }
+    .item-info p {
+      margin: 0.2rem 0;
+    }
+    .item-remover {
+      background-color: #c00;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 0.7rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+    .item-remover:hover {
+      background-color: #a00;
+    }
+    .total {
+      text-align: right;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    .botoes {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    button {
+      padding: 0.7rem 1.2rem;
+      background-color: #000;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #333;
+    }
+    .finalizar {
+      background-color: green;
+    }
+    .vazio {
+      text-align: center;
+      color: #555;
+      font-size: 1.2rem;
+      margin-top: 2rem;
+    }
+    footer {
+      background-color: #000;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: underline;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 1rem;
+      }
+      li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .item-remover {
+        margin-top: 0.5rem;
+        margin-left: 0;
+      }
+      button {
+        width: 100%;
+      }
+      .total {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🛒 Seu Carrinho - King's</h1>
+  </header>
+
+  <div class="container">
+    <h2>Itens no Carrinho</h2>
+    <ul id="lista-carrinho"></ul>
+    <p class="vazio" id="mensagem-vazio">Seu carrinho está vazio.</p>
+    <p class="total" id="total-geral"></p>
+    <div class="botoes" id="botoes-final">
+      <button onclick="voltar()">Continuar Comprando</button>
+      <button onclick="limparCarrinho()">Limpar Carrinho</button>
+      <button class="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>Siga a gente no Instagram:</p>
+    <a href="https://instagram.com/kings" target="_blank">@kings</a>
+  </footer>
+
+  <script>
+    const lista = document.getElementById('lista-carrinho');
+    const mensagem = document.getElementById('mensagem-vazio');
+    const totalElement = document.getElementById('total-geral');
+    const botoesFinal = document.getElementById('botoes-final');
+
+    const precos = {
+      "Camisa Oversized Branca": 69,99,
+      "short linho": 49,99;
+      // Você pode adicionar mais produtos aqui
+    };
+
+    const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const agrupado = {};
+    carrinho.forEach(nome => {
+      agrupado[nome] = (agrupado[nome] || 0) + 1;
+    });
+
+    function exibirCarrinho() {
+      if (carrinho.length === 0) {
+        mensagem.style.display = 'block';
+        totalElement.textContent = '';
+        botoesFinal.style.display = 'none';
+        return;
+      }
+
+      mensagem.style.display = 'none';
+      botoesFinal.style.display = 'flex';
+      let total = 0;
+
+      for (const produto in agrupado) {
+        const quantidade = agrupado[produto];
+        const precoUnit = precos[produto] || 0;
+        const subtotal = precoUnit * quantidade;
+        total += subtotal;
+
+        const li = document.createElement('li');
+        const info = document.createElement('div');
+        info.className = 'item-info';
+        info.innerHTML = `
+          <p><strong>${produto}</strong></p>
+          <p>Quantidade: ${quantidade}</p>
+          <p>Preço unitário: R$ ${precoUnit.toFixed(2)}</p>
+          <p>Subtotal: R$ ${subtotal.toFixed(2)}</p>
+        `;
+
+        const btn = document.createElement('button');
+        btn.className = 'item-remover';
+        btn.textContent = 'Remover';
+        btn.onclick = () => removerProduto(produto);
+
+        li.appendChild(info);
+        li.appendChild(btn);
+        lista.appendChild(li);
+      }
+
+      totalElement.textContent = `Total: R$ ${total.toFixed(2)}`;
+    }
+
+    function removerProduto(nome) {
+      let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+      const index = carrinho.indexOf(nome);
+      if (index > -1) {
+        carrinho.splice(index, 1);
+        localStorage.setItem('carrinho', JSON.stringify(carrinho));
+        location.reload();
+      }
+    }
+
+    function limparCarrinho() {
+      localStorage.removeItem('carrinho');
+      location.reload();
+    }
+
+    function voltar() {
+      window.location.href = "site Kings .html"; // troque para sua página principal
+    }
+
+    function finalizarPedido() {
+      const numeroWhatsApp = '5588988379535'; // ← Coloque seu número aqui (ex: 5511999999999)
+      let mensagem = 'Olá! Quero finalizar meu pedido com os seguintes itens:%0A';
+
+      for (const produto in agrupado) {
+        const quantidade = agrupado[produto];
+        const precoUnit = precos[produto] || 0;
+        const subtotal = precoUnit * quantidade;
+        mensagem += `• ${produto} (x${quantidade}) - R$ ${subtotal.toFixed(2)}%0A`;
+      }
+
+      mensagem += `%0ATotal: R$ ${totalElement.textContent.replace('Total: R$ ', '')}`;
+      const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+      window.open(url, '_blank');
+    }
+
+    window.onload = exibirCarrinho;
+  </script>
+
+</body>
+</html>>
