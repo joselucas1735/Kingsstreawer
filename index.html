@@ -1,281 +1,406 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>King's - Streetwear Masculino</title>
-  
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Urbanist', sans-serif; }
-    body { background: #fff; color: #111; }
-    header {
-      background: #000; color: #fff; padding: 20px 40px;
-      display: flex; justify-content: space-between; align-items: center; position: relative;
-    }
-    .cart-button {
-      position: absolute; left: 20px; top: 50%;
-      transform: translateY(-50%);
-      background: #FFD700; color: black; border: none;
-      padding: 10px 15px; border-radius: 6px;
-      font-weight: 700; cursor: pointer;
-      text-decoration: none;
-    }
-    header h1 {
-      font-weight: 800; font-size: 24px;
-      text-shadow: 1px 1px 2px rgba(255,215,0,0.5);
-      position: absolute; left: 50%; transform: translateX(-50%);
-    }
-    .menu-toggle {
-      position: absolute; right: 20px; top: 50%;
-      transform: translateY(-50%);
-      font-size: 24px; cursor: pointer; color: #FFD700;
-      background: transparent; border: none;
-    }
-    .sidebar {
-      position: fixed; top: 0; right: -250px; width: 250px;
-      height: 100%; background: #111; color: #fff;
-      transition: right 0.3s ease; padding: 40px 20px; z-index: 100;
-    }
-    .sidebar.active { right: 0; }
-    .sidebar a {
-      display: block; color: #fff; margin: 20px 0;
-      text-decoration: none; font-size: 18px;
-    }
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>King's - Streetwear Masculino</title>
 
-    .hero {
-      background: url('/Imagem/IMG_20250725_131725.jpg') center/cover no-repeat;
-      height: 70vh; display: flex; align-items: center;
-      justify-content: center; text-align: center;
-      color: white; font-size: 2rem; font-weight: 800;
-      padding: 20px; text-shadow: 2px 2px 4px #000;
-    }
-    .section-title {
-      text-align: center; font-size: 2rem;
-      margin: 40px 0 20px; font-weight: 800;
-      color: #000; text-shadow: 1px 1px 1px #484D50;
-    }
-    .products {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px; padding: 0 20px 40px;
-    }
-    .product {
-      background: #fff; border: 4px solid black; border-radius: 12px;
-      overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      text-align: center; transition: transform 0.3s ease;
-    }
-    .product:hover { transform: scale(1.03); }
-    .carousel {
-      display: flex; overflow-x: scroll; scroll-snap-type: x mandatory;
-    }
-    .carousel img {
-      flex-shrink: 0; width: 100%; scroll-snap-align: start;
-      object-fit: cover; border-bottom: 2px solid black;
-    }
-    .product h3 { font-size: 1.1rem; margin: 10px 0; color: #000; }
-    .product span { color: #e53935; font-weight: 700; }
-    .product button {
-      background: #FFD700; border: none; padding: 10px;
-      margin: 10px 0; font-weight: bold;
-      cursor: pointer; border-radius: 6px;
-    }
-    footer {
-      background: #000; color: #fff; padding: 40px; text-align: center;
-    }
-    .whatsapp {
-      position: fixed; bottom: 20px; right: 20px;
-      background: #25d366; color: white;
-      padding: 10px 15px; border-radius: 50%;
-      font-size: 24px; text-align: center;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      z-index: 99; text-decoration: none;
-    }
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Urbanist', sans-serif;
+}
+body {
+background: #fff;
+color: #111;
+}
+header {
+background: #000;
+color: #fff;
+padding: 20px 40px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+position: relative;
+}
+.cart-button {
+position: absolute;
+left: 20px;
+top: 50%;
+transform: translateY(-50%);
+background: #FFD700;
+color: black;
+border: none;
+padding: 10px 15px;
+border-radius: 6px;
+font-weight: 700;
+cursor: pointer;
+text-decoration: none;
+}
+header h1 {
+font-weight: 800;
+font-size: 24px;
+text-shadow: 1px 1px 2px rgba(255,215,0,0.5);
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+}
+.menu-toggle {
+position: absolute;
+right: 20px;
+top: 50%;
+transform: translateY(-50%);
+font-size: 24px;
+cursor: pointer;
+color: #FFD700;
+background: transparent;
+border: none;
+}
+.sidebar {
+position: fixed;
+top: 0;
+right: -250px;
+width: 250px;
+height: 100%;
+background: #111;
+color: #fff;
+transition: right 0.3s ease;
+padding: 40px 20px;
+z-index: 100;
+}
+.sidebar.active {
+right: 0;
+}
+.sidebar a {
+display: block;
+color: #fff;
+margin: 20px 0;
+text-decoration: none;
+font-size: 18px;
+}
 
-    /* SEÇÃO SOBRE NÓS */
-    .sobre-nos {
-      background: #111;
-      padding: 50px 20px;
-      margin-top: 40px;
-      color: white;
-      text-align: center;
-      border-bottom: 2px solid white;
-    }
-    .sobre-nos .section-title {
-      color: #FFD700;
-      text-shadow: 1px 1px 3px rgba(255,255,255,0.3);
-    }
-    .sobre-container {
-      max-width: 800px;
-      margin: 20px auto 0;
-    }
-    .sobre-container p {
-      font-size: 1.2rem;
-      line-height: 1.8;
-    }
-    .sobre-container strong {
-      color: #FFD700;
-    }
-  </style>
+.hero {
+background: url('/Imagem/IMG_20250725_131725.jpg') center/cover no-repeat;
+height: 70vh;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+color: white;
+font-size: 2rem;
+font-weight: 800;
+padding: 20px;
+text-shadow: 2px 2px 4px #000;
+}
+.section-title {
+text-align: center;
+font-size: 2rem;
+margin: 40px 0 20px;
+font-weight: 800;
+color: #000;
+text-shadow: 1px 1px 1px #484D50;
+}
+.products {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 20px;
+padding: 0 20px 40px;
+}
+.product {
+background: #fff;
+border: 4px solid black;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+text-align: center;
+transition: transform 0.3s ease;
+}
+.product:hover {
+transform: scale(1.03);
+}
+.carousel {
+display: flex;
+overflow-x: scroll;
+scroll-snap-type: x mandatory;
+}
+.carousel img {
+flex-shrink: 0;
+width: 100%;
+scroll-snap-align: start;
+object-fit: cover;
+border-bottom: 2px solid black;
+}
+.product h3 {
+font-size: 1.1rem;
+margin: 10px 0;
+color: #000;
+}
+.product span {
+color: #e53935;
+font-weight: 700;
+}
+.product button {
+background: #FFD700;
+border: none;
+padding: 10px;
+margin: 10px 0;
+font-weight: bold;
+cursor: pointer;
+border-radius: 6px;
+}
+footer {
+background: #000;
+color: #fff;
+padding: 40px;
+text-align: center;
+}
+.whatsapp {
+position: fixed;
+bottom: 20px;
+right: 20px;
+background: #25d366;
+color: white;
+padding: 10px 15px;
+border-radius: 50%;
+font-size: 24px;
+text-align: center;
+box-shadow: 0 0 10px rgba(0,0,0,0.3);
+z-index: 99;
+text-decoration: none;
+}
+
+/* SEÇÃO SOBRE NÓS */
+.sobre-nos {
+background: #111;
+padding: 50px 20px;
+margin-top: 40px;
+color: white;
+text-align: center;
+border-bottom: 2px solid white;
+}
+.sobre-nos .section-title {
+color: #FFD700;
+text-shadow: 1px 1px 3px rgba(255,255,255,0.3);
+}
+.sobre-container {
+max-width: 800px;
+margin: 20px auto 0;
+}
+.sobre-container p {
+font-size: 1.2rem;
+line-height: 1.8;
+}
+.sobre-container strong {
+color: #FFD700;
+}
+</style>
 </head>
 <body>
-  <header>
-    <a class="cart-button" href="carrinho.html" target="_blank">🛒</a>
-    <h1>King's</h1>
-    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-  </header>
-  <div class="sidebar" id="sidebar">
-    <a href="#inicio">Início</a>
-    <a href="#produtos">Produtos</a>
-    <a href="#sobre">Sobre</a>
-    <a href="https://wa.me/5588988379535" target="_blank">Contato</a>
-  </div>  
+<header>
+<a class="cart-button" href="carrinho.html" target="_blank">🛒</a>
+<h1>King's</h1>
+<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+</header>
+<div class="sidebar" id="sidebar">
+<a href="#inicio">Início</a>
+<a href="#produtos">Produtos</a>
+<a href="#sobre">Sobre</a>
+<a href="https://wa.me/5588988379535" target="_blank">Contato</a>
+</div>
 
-  <section class="hero" id="inicio">
-    <div>O HYPE COMEÇA AQUI</div>
-  </section>  
+<section class="hero" id="inicio">
+<div>
+O HYPE COMEÇA AQUI
+</div>
+</section>
 
-  <section>
-    <h2 class="section-title" id="produtos">Nossos Produtos</h2>
-    <div class="products">
+<section>
+<h2 class="section-title" id="produtos">Nossos Produtos</h2>
+<div class="products">
 
-      <!-- Produto 1 -->
-      <div class="product">
-      <div class="carousel">
-       <img src="Imagem/IMG-20250711-WA0129.jpg" alt="1" />
-       <img src="Imagem/IMG_20250706_175240.jpg" alt="1-2" />
-       <img src="Imagem/IMG_20250722_142133.jpg" alt="2-3" />
-       </div>
-        <h3>Short Linho</h3>
-        <span>R$ 55,00</span>
-        <label>Cor:</label>
-        <select id="cor-short-linho">
-          <option value="Preto">Preto</option>
-          <option value="Cinza">Cinza</option>
-          <option value="Bege">Bege</option>
-        </select>
-        <label>Tamanho:</label>
-        <select id="tam-short-linho">
-          <option value="P">P</option>
-          <option value="M">M</option>
-          <option value="G">G</option>
-          <option value="GG">GG</option>
-        </select>
-        <button onclick="adicionarAoCarrinho('Short linho','R$ 55,00',document.getElementById('cor-short-linho').value,document.getElementById('tam-short-linho').value)">Adicionar ao Carrinho</button>
-      </div>
+<!-- Produto 1 -->
+<div class="product">
+<div class="carousel">
+<img src="/Imagem/IMG-20250711-WA0129.jpg" alt="1" />
+<img src="/Imagem/IMG_20250706_175240.jpg" alt="1-2" />
+<img src="/Imagem/IMG_20250722_142133.jpg" alt="2-3" />
+</div>
+<h3>Short Linho</h3>
+<span>R$ 55,00</span>
+<label>Cor:</label>
+<select id="cor-short-linho">
+<option value="Preto">Preto</option>
+<option value="Cinza">Cinza</option>
+<option value="Bege">Bege</option>
+</select>
+<label>Tamanho:</label>
+<select id="tam-short-linho">
+<option value="P">P</option>
+<option value="M">M</option>
+<option value="G">G</option>
+<option value="GG">GG</option>
+</select>
+<button onclick="adicionarAoCarrinho('Short linho','R$ 55,00',document.getElementById('cor-short-linho').value,document.getElementById('tam-short-linho').value)">Adicionar ao Carrinho</button>
+</div>
 
-      <!-- Produto 2 -->
-      <div class="product">
-        <div class="carousel">
-          <img src="Imagem/IMG-20250718-WA0445.jpg" alt="Camisa Peruana">
-          <img src="Imagem/IMG-20250718-WA0461.jpg" alt="Camisa Peruana">
-          <img src="Imagem/IMG-20250718-WA0462.jpg" alt="Camisa Peruana">
-        </div>
-        <h3>Camisa Peruana Legítima</h3>
-        <span>R$ 49,99</span>
-        <label>Cor:</label>
-        <select id="cor-camisa-peruana">
-          <option value="Branca">Branca</option>
-          <option value="Preta">Preta</option>
-          <option value="Vermelha">Vermelha</option>
-        </select>
-        <label>Tamanho:</label>
-        <select id="tam-camisa-peruana">
-          <option value="P">P</option>
-          <option value="M">M</option>
-          <option value="G">G</option>
-          <option value="GG">GG</option>
-        </select>
-        <button onclick="adicionarAoCarrinho('Camisa peruana legítima','R$ 49,99',document.getElementById('cor-camisa-peruana').value,document.getElementById('tam-camisa-peruana').value)">Adicionar ao Carrinho</button>
-      </div>
+<!-- Produto 2 -->
+<div class="product">
+<div class="carousel">
+<img src="/Imagem/IMG-20250718-WA0445.jpg" alt="Camisa Peruana">
+<img src="/Imagem/IMG-20250718-WA0461.jpg" alt="Camisa Peruana">
+<img src="/Imagem/IMG-20250718-WA0462.jpg" alt="Camisa Peruana">
+</div>
+<h3>Camisa Peruana Legítima</h3>
+<span>R$ 49,99</span>
+<label>Cor:</label>
+<select id="cor-camisa-peruana">
+<option value="Branca">Branca</option>
+<option value="Preta">Preta</option>
+<option value="Vermelha">Vermelha</option>
+</select>
+<label>Tamanho:</label>
+<select id="tam-camisa-peruana">
+<option value="P">P</option>
+<option value="M">M</option>
+<option value="G">G</option>
+<option value="GG">GG</option>
+</select>
+<button onclick="adicionarAoCarrinho('Camisa peruana legítima','R$ 49,99',document.getElementById('cor-camisa-peruana').value,document.getElementById('tam-camisa-peruana').value)">Adicionar ao Carrinho</button>
+</div>
 
-      <!-- Produto 3 -->
-      <div class="product">
-        <div class="carousel">
-          <img src="Imagem/IMG_20250730_154530.jpg" alt="Oversized Streetwear">
-          <img src="Imagem/IMG_20250730_154514.jpg" alt="Oversized Streetwear">
-          <img src="Imagem/IMG_20250730_154520.jpg" alt="Oversized Streetwear">
-        </div>
-        <h3>Oversized Streetwear</h3>
-        <span>R$ 79,99</span>
-        <label>Cor:</label>
-        <select id="cor-oversized-streetwear">
-          <option value="Branca">Branca</option>
-          <option value="Preta">Preta</option>
-          <option value="Roxa">Roxa</option>
-        </select>
-        <label>Tamanho:</label>
-        <select id="tam-oversized-streetwear">
-          <option value="P">P</option>
-          <option value="M">M</option>
-          <option value="G">G</option>
-        </select>
-        <button onclick="adicionarAoCarrinho('Camisa Oversized Streetwear','R$ 79,99',document.getElementById('cor-oversized-streetwear').value,document.getElementById('tam-oversized-streetwear').value)">Adicionar ao Carrinho</button>
-      </div>
+<!-- Produto 3 -->
+<div class="product">
+<div class="carousel">
+<img src="/Imagem/IMG_20250730_154530.jpg" alt="Oversized Streetwear">
+<img src="/Imagem/IMG_20250730_154514.jpg" alt="Oversized Streetwear">
+<img src="/Imagem/IMG_20250730_154520.jpg" alt="Oversized Streetwear">
+<img src="/Imagem/IMG_20250730_153710.jpg" alt="Oversized Streetwear">
+<img src="/Imagem/IMG_20250730_153650.jpg" alt="Oversized Streetwear">
+<img src="/Imagem/IMG_20250730_153654.jpg" alt="Oversized Streetwear">          <img src="/Imagem/IMG_20250730_153943.jpg" alt="Oversized Streetwear">          <img src="/Imagem/IMG_20250730_153928.jpg" alt="Oversized Streetwear">          <img src="/Imagem/IMG_20250730_153808.jpg" alt="Oversized Streetwear">          <img src="/Imagem/IMG_20250730_153800.jpg" alt="Oversized Streetwear">
+</div>
+<h3>Oversized Streetwear</h3>
+<span>R$ 79,99</span>
+<label>Cor:</label>
+<select id="cor-oversized-streetwear">
+<option value="Branca">Branca</option>
+<option value="Preta">Preta</option>
+<option value="Roxa">Roxa</option>
+</select>
+<label>Tamanho:</label>
+<select id="tam-oversized-streetwear">
+<option value="P">P</option>
+<option value="M">M</option>
+<option value="G">G</option>
+</select>
+<button onclick="adicionarAoCarrinho('Camisa Oversized Streetwear','R$ 80,00',document.getElementById('cor-oversized-streetwear').value,document.getElementById('tam-oversized-streetwear').value)">Adicionar ao Carrinho</button>
+</div>
 
-      <!-- Produto 4 -->
-      <div class="product">
-        <div class="carousel">
-          <img src="Imagem/IMG_20250730_154735.jpg" alt="Oversized Nike">
-          <img src="Imagem/IMG_20250730_154714.jpg" alt="Oversized Nike">
-          <img src="Imagem/IMG_20250730_154723.jpg" alt="Oversized Nike">
-        </div>
-        <h3>Oversized Nike</h3>
-        <span>R$ 79,99</span>
-        <label>Cor:</label>
-        <select id="cor-oversized-nike">
-          <option value="Branca">Branca</option>
-          <option value="Preta">Preta</option>
-          <option value="Roxa">Roxa</option>
-        </select>
-        <label>Tamanho:</label>
-        <select id="tam-oversized-nike">
-          <option value="P">P</option>
-          <option value="M">M</option>
-          <option value="G">G</option>
-        </select>
-        <button onclick="adicionarAoCarrinho('Camisa Oversized Nike','R$ 79,99',document.getElementById('cor-oversized-nike').value,document.getElementById('tam-oversized-nike').value)">Adicionar ao Carrinho</button>
-      </div>
+<!-- Produto 4 -->
+<div class="product">
+<div class="carousel">
+<img src="/Imagem/IMG_20250730_154735.jpg" alt="Oversized Nike">
+<img src="/Imagem/IMG_20250730_154714.jpg" alt="Oversized Nike">
+<img src="/Imagem/IMG_20250730_154723.jpg" alt="Oversized Nike">
+<img src="/Imagem/IMG_20250730_154919.jpg" alt="Oversized Nike">
+<img src="/Imagem/IMG_20250730_154905.jpg" alt="Oversized Nike">
+<img src="/Imagem/IMG_20250730_154912.jpg" alt="Oversized Nike">
+<img src="/Imagem/IMG_20250730_154203.jpg" alt="Oversized Nike">
+<img src="/Imagem/IMG_20250730_154154.jpg" alt="Oversized Nike">
 
-    </div>
-  </section>  
+</div>
+<h3>Oversized Nike</h3>
+<span>R$ 79,99</span>
+<label>Cor:</label>
+<select id="cor-oversized-nike">
+<option value="Verde escuro">Verde escuro</option>
+<option value="Preta">Preta</option>
+<option value="Roxa">Roxa</option>
+</select>
+<label>Tamanho:</label>
+<select id="tam-oversized-nike">
+<option value="P">P</option>
+<option value="M">M</option>
+<option value="G">G</option>
+</select>
+<button onclick="adicionarAoCarrinho('Camisa Oversized Nike','R$ 80,00',document.getElementById('cor-oversized-nike').value,document.getElementById('tam-oversized-nike').value)">Adicionar ao Carrinho</button>
+</div>
 
-  <section class="sobre-nos" id="sobre">
-    <h2 class="section-title">Sobre Nós</h2>
-    <div class="sobre-container">
-      <p>
-        A <strong>King’s</strong> nasceu com a missão de levar estilo e autenticidade para o streetwear masculino.
-        Nosso foco é oferecer peças com qualidade, preço acessível e aquele toque único que faz a diferença no dia a dia.
-        Mais do que roupas, entregamos uma <strong>experiência de conexão com a cultura urbana</strong>, feita para quem vive o hype e quer se destacar.
-      </p>
-    </div>
-  </section>
 
-  <footer>
-    <p>King's Streetwear © 2025 - Todos os direitos reservados</p>
-  </footer>
+<div class="product">
+<div class="carousel">
+<img src="/Imagem/IMG_20250730_154339.jpg" alt="Oversized">
+<img src="/Imagem/IMG_20250730_154320.jpg" alt="Oversized ">
+<img src="/Imagem/IMG_20250730_154326.jpg" alt="Oversized ">
+<img src="/Imagem/IMG_20250730_153527.jpg" alt="Over">
+<img src="/Imagem/IMG_20250730_153511.jpg" alt="Off">
+<img src="/Imagem/IMG_20250730_153515.jpg" alt="Off">
 
-  <a class="whatsapp" href="https://wa.me/5588988379535" target="_blank">💬</a>
+</div>
+<h3>Oversized Off White</h3>
+<span>R$ 79,99</span>
+<label>Cor:</label>
+<select id="cor-oversized-off-white">
+<option value="Branca">Branca</option>
+<option value="Marrom">Martom</option>
+</select>
+<label>Tamanho:</label>
+<select id="tam-oversized-off-white">
+<option value="P">P</option>
+<option value="M">M</option>
+<option value="G">G</option>
+</select>
+<button onclick="adicionarAoCarrinho('Camisa Oversized off white','R$ 80,00',document.getElementById('cor-oversized-off-white').value,document.getElementById('tam-oversized-off-white').value)">Adicionar ao Carrinho</button>
+</div>
 
-  <script>
-   function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('active');
-      const links = sidebar.querySelectorAll('a');
-      links.forEach(link => { link.onclick = () => sidebar.classList.remove('active'); });
-    }
+</div>
+</section>
+</div>
+<section class="sobre-nos" id="sobre">
+<h2 class="section-title">Sobre Nós</h2>
+<div class="sobre-container">
+<p>
+A <strong>King’s</strong> nasceu com a missão de levar estilo e autenticidade para o streetwear masculino.
+Nosso foco é oferecer peças com qualidade, preço acessível e aquele toque único que faz a diferença no dia a dia.
+Mais do que roupas, entregamos uma <strong>experiência de conexão com a cultura urbana</strong>, feita para quem vive o hype e quer se destacar.
+</p>
+</div>
+</section>
 
-    function adicionarAoCarrinho(nome, preco, cor, tamanho) {
-      let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-      let itemExistente = carrinho.find(p => p.nome === nome && p.cor === cor && p.tamanho === tamanho);
+<footer>
+<p>
+King's Streetwear © 2025 - Todos os direitos reservados
+</p>
+</footer>
 
-      if (itemExistente) {
-        itemExistente.quantidade += 1;
-      } else {
-        carrinho.push({ nome, preco, cor, tamanho, quantidade: 1 });
-      }
+<a class="whatsapp" href="https://wa.me/5588988379535" target="_blank">💬</a>
 
-      localStorage.setItem('carrinho', JSON.stringify(carrinho));
-      alert(`${nome} (${cor} - Tam: ${tamanho}) foi adicionado ao carrinho!`);
-    }
-  </script>
+<script>
+function toggleSidebar() {
+const sidebar = document.getElementById('sidebar');
+sidebar.classList.toggle('active');
+const links = sidebar.querySelectorAll('a');
+links.forEach(link => {
+link.onclick = () => sidebar.classList.remove('active');
+});
+}
+
+function adicionarAoCarrinho(nome, preco, cor, tamanho) {
+let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+let itemExistente = carrinho.find(p => p.nome === nome && p.cor === cor && p.tamanho === tamanho);
+
+if (itemExistente) {
+itemExistente.quantidade += 1;
+} else {
+carrinho.push({
+nome, preco, cor, tamanho, quantidade: 1
+});
+}
+
+localStorage.setItem('carrinho', JSON.stringify(carrinho));
+alert(`${nome} (${cor} - Tam: ${tamanho}) foi adicionado ao carrinho!`);
+}
+</script>
 </body>
 </html>
